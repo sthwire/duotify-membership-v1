@@ -2,7 +2,7 @@
 
 **功能分支**: `001-member-registration`
 **建立**: 2025-10-18
-**狀態**: 草稿
+**狀態**: 澄清完成，準備規劃
 **輸入**: 使用者描述: "# 會員註冊流程
 
 我們的核心目標是讓新使用者能透過一個簡單、安全的流程，順利註冊帳號並完成 E-Mail 驗證，以便使用平台功能。
@@ -84,6 +84,9 @@
 - **FR-007**: 系統必須允許未驗證用戶登入但限制部分功能
 - **FR-008**: 系統必須在驗證完成後啟用帳號所有功能
 - **FR-009**: 系統必須在註冊完成後不自動登入用戶
+- **FR-010**: 系統必須支援雙重角色系統：一般用戶與管理員
+- **FR-011**: 新註冊用戶預設為一般用戶角色
+- **FR-012**: 管理員角色必須由開發團隊手動指定
 
 ### User Experience & Consistency Requirements
 
@@ -101,14 +104,30 @@ Per the project constitution (Principle III), this feature MUST include:
 
 Per the project constitution (Principle IV), this feature MUST include:
 
-- **PERF-001**: API 回應時間必須 ≤ 200ms (p95 正常負載下)
+- **PERF-001**: API 回應時間必須 ≤ 500ms (p95 正常負載下)
 - **PERF-002**: UI 互動必須在 ≤ 100ms 內回應才能感覺即時
 - **PERF-003**: 資料庫查詢必須使用適當索引最佳化
 - **PERF-004**: 負載測試必須在發布前執行
 
+### Security & Privacy Requirements
+
+- **SEC-001**: 系統必須使用基於 Session 的認證搭配安全的 HTTP-only cookies
+- **SEC-002**: 用戶密碼必須使用強加密演算法雜湊儲存
+- **SEC-003**: 驗證碼必須在單次使用後失效，防止重複使用
+- **SEC-004**: 敏感用戶資料（如身分證字號）必須加密儲存
+- **SEC-005**: 系統必須實作基於 IP 的速率限制，每個 IP 每小時最多允許 5 次註冊嘗試
+- **SEC-006**: 超過速率限制時系統必須顯示清晰的錯誤訊息並建議稍後重試
+
+### Integration & External Dependencies
+
+- **INT-001**: 系統必須使用第三方郵件服務 API（如 SendGrid、Mailgun）發送驗證郵件
+- **INT-002**: 郵件服務必須支援 HTML 格式郵件與自訂寄件者
+- **INT-003**: 系統必須處理郵件發送失敗的情況並記錄錯誤
+- **INT-004**: 郵件服務 API 必須支援重試機制以處理臨時故障
+
 ### Key Entities *(include if feature involves data)*
 
-- **用戶帳號**: 代表註冊用戶，包含身分證字號、姓名、E-Mail、密碼雜湊、驗證狀態、建立時間
+- **用戶帳號**: 代表註冊用戶，包含身分證字號、姓名、E-Mail、密碼雜湊、驗證狀態、建立時間、Session ID
 - **驗證記錄**: 追蹤發送的驗證碼，包含驗證碼、發送時間、過期時間、使用狀態
 
 ## Success Criteria *(mandatory)*
@@ -118,5 +137,14 @@ Per the project constitution (Principle IV), this feature MUST include:
 - **SC-001**: 用戶必須能在 3 分鐘內完成整個註冊與驗證流程
 - **SC-002**: 90% 的用戶必須能在首次嘗試中成功完成註冊
 - **SC-003**: 驗證郵件必須在註冊後 30 秒內送達
-- **SC-004**: 系統必須支援每分鐘 100 個並發註冊請求而不降級
+- **SC-004**: 系統必須支援每分鐘 10 個並發註冊請求而不降級
+
+## Clarifications
+
+### Session 2025-10-18
+- Q: 系統應使用哪種認證方法？ → A: 基於 Session 的認證搭配安全的 HTTP-only cookies
+- Q: 系統應如何發送驗證郵件？ → A: 使用第三方郵件服務 API（如 SendGrid、Mailgun）
+- Q: 系統應如何防護註冊濫用？ → A: 基於 IP 的速率限制，每小時最多 5 次註冊嘗試
+- Q: 系統應如何設計用戶角色？ → A: 雙重角色系統 (一般用戶 + 管理員)
+- Q: 系統規模預期為何？ → A: 小型應用 (每月 < 1,000 註冊)
 
