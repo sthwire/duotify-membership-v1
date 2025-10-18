@@ -1,0 +1,323 @@
+openapi: 3.0.3
+info:
+  title: 認證 API
+  description: 用戶認證相關的 REST API 合約
+  version: 1.0.0
+  contact:
+    name: Duotify 團隊
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: 開發環境
+  - url: https://api.duotify.com/api/v1
+    description: 生產環境
+
+paths:
+  /auth/login:
+    post:
+      summary: 用戶登入
+      description: 使用郵件和密碼進行登入，支援未驗證用戶
+      tags:
+        - 認證
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            examples:
+              verified_user:
+                summary: 已驗證用戶登入
+                value:
+                  email: "wang@example.com"
+                  password: "Abc123456"
+              unverified_user:
+                summary: 未驗證用戶登入
+                value:
+                  email: "unverified@example.com"
+                  password: "Abc123456"
+      responses:
+        '200':
+          description: 登入成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+              examples:
+                verified_login:
+                  summary: 已驗證用戶登入成功
+                  value:
+                    success: true
+                    message: "登入成功"
+                    data:
+                      user:
+                        id: 123
+                        name: "王小明"
+                        email: "wang@example.com"
+                        role: "user"
+                        isVerified: true
+                      sessionId: "sess_abc123"
+                unverified_login:
+                  summary: 未驗證用戶登入成功（功能受限）
+                  value:
+                    success: true
+                    message: "登入成功，但帳號尚未驗證，部分功能受限"
+                    data:
+                      user:
+                        id: 124
+                        name: "李小華"
+                        email: "unverified@example.com"
+                        role: "user"
+                        isVerified: false
+                      sessionId: "sess_def456"
+                      limitations: ["無法使用付費功能", "無法修改個人資料"]
+        '400':
+          description: 登入失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_credentials:
+                  summary: 帳密錯誤
+                  value:
+                    success: false
+                    error:
+                      code: "INVALID_CREDENTIALS"
+                      message: "郵件或密碼錯誤"
+                account_locked:
+                  summary: 帳號鎖定
+                  value:
+                    success: false
+                    error:
+                      code: "ACCOUNT_LOCKED"
+                      message: "登入失敗次數過多，帳號已鎖定 15 分鐘"
+        '429':
+          description: 請求過於頻繁
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error:
+                  code: "RATE_LIMIT_EXCEEDED"
+                  message: "請求過於頻繁，請稍後再試"
+        '500':
+          description: 伺服器內部錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/logout:
+    post:
+      summary: 用戶登出
+      description: 清除用戶 Session，結束登入狀態
+      tags:
+        - 認證
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: 登出成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                success: true
+                message: "登出成功"
+        '401':
+          description: 未登入或 Session 無效
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error:
+                  code: "NOT_AUTHENTICATED"
+                  message: "請先登入"
+        '500':
+          description: 伺服器內部錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/me:
+    get:
+      summary: 獲取當前用戶資訊
+      description: 獲取已登入用戶的詳細資訊
+      tags:
+        - 認證
+      security:
+        - sessionAuth: []
+      responses:
+        '200':
+          description: 成功獲取用戶資訊
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+              example:
+                success: true
+                data:
+                  user:
+                    id: 123
+                    nationalId: "A123456789"
+                    name: "王小明"
+                    email: "wang@example.com"
+                    role: "user"
+                    isVerified: true
+                    createdAt: "2025-10-18T10:00:00Z"
+        '401':
+          description: 未登入或 Session 無效
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 伺服器內部錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: 用戶郵件地址
+          example: "wang@example.com"
+        password:
+          type: string
+          description: 用戶密碼
+          example: "Abc123456"
+
+    LoginResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          description: 登入結果訊息
+        data:
+          type: object
+          properties:
+            user:
+              $ref: '#/components/schemas/UserInfo'
+            sessionId:
+              type: string
+              description: Session ID
+              example: "sess_abc123"
+            limitations:
+              type: array
+              items:
+                type: string
+              description: 功能限制清單（未驗證用戶）
+              example: ["無法使用付費功能", "無法修改個人資料"]
+
+    UserInfo:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: 用戶 ID
+          example: 123
+        name:
+          type: string
+          description: 用戶姓名
+          example: "王小明"
+        email:
+          type: string
+          description: 用戶郵件
+          example: "wang@example.com"
+        role:
+          type: string
+          enum: [user, admin]
+          description: 用戶角色
+          example: "user"
+        isVerified:
+          type: boolean
+          description: 是否已驗證
+          example: true
+
+    UserProfileResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        data:
+          type: object
+          properties:
+            user:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 123
+                nationalId:
+                  type: string
+                  example: "A123456789"
+                name:
+                  type: string
+                  example: "王小明"
+                email:
+                  type: string
+                  example: "wang@example.com"
+                role:
+                  type: string
+                  enum: [user, admin]
+                  example: "user"
+                isVerified:
+                  type: boolean
+                  example: true
+                createdAt:
+                  type: string
+                  format: date-time
+                  example: "2025-10-18T10:00:00Z"
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          description: 成功訊息
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: 錯誤代碼
+            message:
+              type: string
+              description: 錯誤訊息
+
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: sessionId
+      description: Session-based 認證

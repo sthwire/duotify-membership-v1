@@ -1,0 +1,311 @@
+openapi: 3.0.3
+info:
+  title: 會員註冊 API
+  description: 會員註冊流程的 REST API 合約
+  version: 1.0.0
+  contact:
+    name: Duotify 團隊
+
+servers:
+  - url: http://localhost:3000/api/v1
+    description: 開發環境
+  - url: https://api.duotify.com/api/v1
+    description: 生產環境
+
+paths:
+  /registration:
+    post:
+      summary: 用戶註冊
+      description: 建立新用戶帳號並發送驗證郵件
+      tags:
+        - 註冊
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrationRequest'
+            examples:
+              valid_registration:
+                summary: 有效註冊請求
+                value:
+                  nationalId: "A123456789"
+                  name: "王小明"
+                  email: "wang@example.com"
+                  password: "Abc123456"
+              invalid_national_id:
+                summary: 無效身分證格式
+                value:
+                  nationalId: "invalid"
+                  name: "王小明"
+                  email: "wang@example.com"
+                  password: "Abc123456"
+      responses:
+        '201':
+          description: 註冊成功，驗證郵件已發送
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                success: true
+                message: "註冊成功，請檢查您的郵件並完成驗證"
+                data:
+                  userId: 123
+                  email: "wang@example.com"
+        '400':
+          description: 請求參數錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                duplicate_national_id:
+                  summary: 重複身分證
+                  value:
+                    success: false
+                    error:
+                      code: "DUPLICATE_NATIONAL_ID"
+                      message: "此身分證字號已被註冊"
+                invalid_password:
+                  summary: 密碼格式錯誤
+                  value:
+                    success: false
+                    error:
+                      code: "INVALID_PASSWORD"
+                      message: "密碼必須包含大小寫英文與數字，且長度為 8-20 字元"
+        '429':
+          description: 請求過於頻繁
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error:
+                      code: "RATE_LIMIT_EXCEEDED"
+                      message: "請求過於頻繁，請稍後再試"
+        '500':
+          description: 伺服器內部錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /registration/verify:
+    post:
+      summary: 驗證註冊
+      description: 使用驗證碼完成帳號驗證
+      tags:
+        - 註冊
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerificationRequest'
+            examples:
+              valid_verification:
+                summary: 有效驗證請求
+                value:
+                  email: "wang@example.com"
+                  code: "123456"
+              expired_code:
+                summary: 過期驗證碼
+                value:
+                  email: "wang@example.com"
+                  code: "000000"
+      responses:
+        '200':
+          description: 驗證成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+              example:
+                success: true
+                message: "驗證成功，您的帳號已啟用"
+                data:
+                  userId: 123
+                  email: "wang@example.com"
+                  verified: true
+        '400':
+          description: 驗證失敗
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                invalid_code:
+                  summary: 驗證碼錯誤
+                  value:
+                    success: false
+                    error:
+                      code: "INVALID_VERIFICATION_CODE"
+                      message: "驗證碼錯誤或已過期"
+                code_used:
+                  summary: 驗證碼已使用
+                  value:
+                    success: false
+                    error:
+                      code: "VERIFICATION_CODE_USED"
+                      message: "此驗證碼已被使用"
+        '404':
+          description: 用戶不存在
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                success: false
+                error:
+                  code: "USER_NOT_FOUND"
+                  message: "找不到此郵件的用戶記錄"
+        '429':
+          description: 請求過於頻繁
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: 伺服器內部錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /registration/resend:
+    post:
+      summary: 重發驗證郵件
+      description: 重新發送驗證郵件
+      tags:
+        - 註冊
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResendRequest'
+      responses:
+        '200':
+          description: 重發成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '400':
+          description: 請求錯誤
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: 用戶不存在或已驗證
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '429':
+          description: 請求過於頻繁
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+components:
+  schemas:
+    RegistrationRequest:
+      type: object
+      required:
+        - nationalId
+        - name
+        - email
+        - password
+      properties:
+        nationalId:
+          type: string
+          pattern: '^[A-Z][0-9]{9}$'
+          description: 台灣身分證字號
+          example: "A123456789"
+        name:
+          type: string
+          minLength: 2
+          maxLength: 50
+          description: 用戶姓名
+          example: "王小明"
+        email:
+          type: string
+          format: email
+          description: 電子郵件地址
+          example: "wang@example.com"
+        password:
+          type: string
+          minLength: 8
+          maxLength: 20
+          pattern: '^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$'
+          description: 密碼（必須包含大小寫英文與數字）
+          example: "Abc123456"
+
+    VerificationRequest:
+      type: object
+      required:
+        - email
+        - code
+      properties:
+        email:
+          type: string
+          format: email
+          description: 註冊時使用的郵件地址
+        code:
+          type: string
+          pattern: '^\d{6}$'
+          description: 6 位數驗證碼
+          example: "123456"
+
+    ResendRequest:
+      type: object
+      required:
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+          description: 註冊時使用的郵件地址
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          description: 成功訊息
+        data:
+          type: object
+          description: 回傳資料（依端點而定）
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: 錯誤代碼
+              example: "INVALID_PASSWORD"
+            message:
+              type: string
+              description: 錯誤訊息
+              example: "密碼格式不符合要求"
+
+  securitySchemes:
+    sessionAuth:
+      type: apiKey
+      in: cookie
+      name: sessionId
+      description: Session-based 認證
