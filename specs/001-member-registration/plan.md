@@ -55,7 +55,8 @@ specs/001-member-registration/
 ├── contracts/           # Phase 1 output (已完成)
 │   ├── registration-api.yaml
 │   └── auth-api.yaml
-└── tasks.md             # Phase 2 output (待生成)
+├── tasks.md             # Phase 2 output (已完成)
+```
 ```
 
 ### Source Code (repository root)
