@@ -31,7 +31,18 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+This feature MUST satisfy all four core principles from the project constitution:
+
+- **Code Quality**: Implementation MUST adhere to linting standards and demonstrate
+  clear, maintainable architecture with single responsibility per function/module
+- **Testing Standards**: TDD mandatory - tests written first, ≥80% coverage required
+  for critical paths, all public APIs MUST have contract tests
+- **User Experience Consistency**: All UI/API must follow established patterns,
+  error messages must be clear and actionable, accessibility (WCAG 2.1 AA minimum)
+- **Performance Requirements**: API ≤200ms p95, UI interactions ≤100ms, load testing
+  before release, performance regressions caught in CI
+
+**Validation**: Code review MUST explicitly verify each principle's compliance.
 
 ## Project Structure
 

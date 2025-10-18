@@ -48,6 +48,9 @@ description: "Task list template for feature implementation"
 - [ ] T001 Create project structure per implementation plan
 - [ ] T002 Initialize [language] project with [framework] dependencies
 - [ ] T003 [P] Configure linting and formatting tools
+- [ ] T004 [P] Setup code quality enforcement (ESLint, Prettier, Black, etc.)
+- [ ] T005 [P] Configure test runner and coverage reporting
+- [ ] T006 [P] Setup performance profiling and monitoring tools
 
 ---
 
@@ -59,12 +62,15 @@ description: "Task list template for feature implementation"
 
 Examples of foundational tasks (adjust based on your project):
 
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T007 Setup database schema and migrations framework
+- [ ] T008 [P] Implement authentication/authorization framework
+- [ ] T009 [P] Setup API routing and middleware structure
+- [ ] T010 Create base models/entities that all stories depend on
+- [ ] T011 Configure error handling and logging infrastructure
+- [ ] T012 Setup environment configuration management
+- [ ] T013 [P] Create base error response types (per UX consistency principle)
+- [ ] T014 [P] Establish design system component library
+- [ ] T015 Setup CI/CD pipeline with quality gates (tests, coverage, linting)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -76,21 +82,22 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 1 (OPTIONAL - only if tests requested) ⚠️
+### Quality & Testing Tasks for User Story 1 (REQUIRED per Constitution)
 
-**NOTE: Write these tests FIRST, ensure they FAIL before implementation**
+- [ ] T016 [P] [US1] Write unit tests (FIRST) for [component] in tests/unit/test_[name].py
+- [ ] T017 [P] [US1] Write contract tests (FIRST) for [endpoint] in tests/contract/test_[name].py
+- [ ] T018 [P] [US1] Write integration tests for [user journey] in tests/integration/test_[name].py
+- [ ] T019 [US1] Add performance benchmarks for [critical path] if PERF-001/PERF-002 apply
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
+### Implementation Tasks for User Story 1
 
-### Implementation for User Story 1
-
-- [ ] T012 [P] [US1] Create [Entity1] model in src/models/[entity1].py
-- [ ] T013 [P] [US1] Create [Entity2] model in src/models/[entity2].py
-- [ ] T014 [US1] Implement [Service] in src/services/[service].py (depends on T012, T013)
-- [ ] T015 [US1] Implement [endpoint/feature] in src/[location]/[file].py
-- [ ] T016 [US1] Add validation and error handling
-- [ ] T017 [US1] Add logging for user story 1 operations
+- [ ] T020 [P] [US1] Create [Entity1] model in src/models/[entity1].py
+- [ ] T021 [P] [US1] Create [Entity2] model in src/models/[entity2].py
+- [ ] T022 [US1] Implement [Service] in src/services/[service].py (depends on T020, T021)
+- [ ] T023 [US1] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T024 [US1] Add validation and error handling per UX consistency principle (clear error messages)
+- [ ] T025 [US1] Add logging for user story 1 operations
+- [ ] T026 [US1] UX review - verify alignment with design system and accessibility standards
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently
 
@@ -102,9 +109,19 @@ Examples of foundational tasks (adjust based on your project):
 
 **Independent Test**: [How to verify this story works on its own]
 
-### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
+### Quality & Testing Tasks for User Story 2 (REQUIRED per Constitution)
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
+- [ ] T027 [P] [US2] Write unit tests (FIRST) for [component] in tests/unit/test_[name].py
+- [ ] T028 [P] [US2] Write contract tests (FIRST) for [endpoint] in tests/contract/test_[name].py
+- [ ] T029 [US2] Add performance benchmarks if applicable
+
+### Implementation Tasks for User Story 2
+
+- [ ] T030 [P] [US2] Create [Entity] model in src/models/[entity].py
+- [ ] T031 [US2] Implement [Service] in src/services/[service].py
+- [ ] T032 [US2] Implement [endpoint/feature] in src/[location]/[file].py
+- [ ] T033 [US2] Add validation and error handling
+- [ ] T034 [US2] UX review - verify design system compliance
 - [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
 
 ### Implementation for User Story 2

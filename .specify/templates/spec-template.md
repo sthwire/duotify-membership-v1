@@ -95,6 +95,27 @@
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
+### User Experience & Consistency Requirements
+
+Per the project constitution (Principle III), this feature MUST include:
+
+- **UX-001**: All UI components MUST follow established design system patterns
+- **UX-002**: Error messages MUST be clear, actionable, and user-friendly
+- **UX-003**: Loading states and user feedback MUST be visible and informative
+- **UX-004**: Feature MUST comply with WCAG 2.1 AA accessibility standards minimum
+- **UX-005**: API responses MUST use consistent data formats and error structures
+- **UX-006**: User workflows MUST align with existing interaction patterns
+- **UX-007**: Localization/internationalization considerations MUST be addressed in design
+
+### Performance Requirements
+
+Per the project constitution (Principle IV), this feature MUST include:
+
+- **PERF-001**: API response times MUST be ≤ 200ms for p95 under normal load
+- **PERF-002**: UI interactions MUST respond in ≤ 100ms to feel instant
+- **PERF-003**: Database queries MUST be optimized with proper indexing
+- **PERF-004**: Load testing MUST be performed before release
+
 ### Key Entities *(include if feature involves data)*
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
