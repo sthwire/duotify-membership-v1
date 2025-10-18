@@ -1,168 +1,176 @@
 <!-- 
 =============================================================================
-SYNC IMPACT REPORT
+同步影響報告
 =============================================================================
-Version Change: 0.1.0 (template) → 1.0.0 (initial)
-Rationale: Established foundational governance with four core principles
-          addressing code quality, testing standards, UX consistency, and
-          performance requirements.
+版本變更: 1.0.0 → 1.1.0 (語言與文檔本地化)
+升級理由: 新增文檔本地化原則，要求所有規範、計劃和用戶文件
+         使用繁體中文 (zh-TW)
 
-Principles Established:
-- Code Quality (Principle I)
-- Testing Standards (Principle II)  
-- User Experience Consistency (Principle III)
-- Performance Requirements (Principle IV)
+新增原則:
+- 文檔本地化 (Principle V)
 
-Added Sections:
-- Quality Assurance Standards
-- Development Workflow & Review Process
+修改的章節:
+- 治理章節: 擴展合規性審查以涵蓋文檔語言要求
 
-Templates Updated:
-- ✅ .specify/templates/plan-template.md (Constitution Check now references all 4 principles)
-- ✅ .specify/templates/spec-template.md (added UX-001 to UX-007, PERF-001 to PERF-004)
-- ✅ .specify/templates/tasks-template.md (integrated Quality, Testing, UX review tasks in each Phase)
+更新的模板:
+- ✅ .specify/templates/plan-template.md (加入繁體中文要求)
+- ✅ .specify/templates/spec-template.md (加入繁體中文要求)
+- ✅ .specify/templates/tasks-template.md (加入繁體中文審查任務)
+- ✅ .specify/templates/checklist-template.md (待檢查)
 
-Follow-up TODOs: None - all placeholders resolved.
+待辦事項: 無
 =============================================================================
 -->
 
-# Duotify Membership Constitution
+# Duotify 會員系統憲章
 
-## Core Principles
+## 核心原則
 
-### I. Code Quality
-All specifications, plans, and user-facing documentation MUST be written in Traditional Chinese (zh-TW)
+### I. 代碼品質
 
-Every line of code must be maintainable, understandable, and aligned with
-industry best practices. Code quality is non-negotiable and directly impacts
-the project's long-term sustainability and team velocity.
+每一行代碼都必須易於維護、易於理解，並符合業界最佳實踐。代碼品質不可妥協，直接影響
+專案的長期永續性和團隊開發效率。
 
-**Non-Negotiable Rules:**
-- All code MUST adhere to established linting and formatting standards
-- Code reviews MUST verify readability, architecture, and maintainability
-- No complex logic without clear documentation and comments
-- Functions and modules MUST have a single, well-defined responsibility
-- Dead code and unused dependencies MUST be removed immediately
-- Naming conventions MUST be consistent and self-documenting
+**不可妥協的規則:**
+- 所有代碼必須遵守既定的 linting 與格式化標準
+- 代碼審查必須驗證可讀性、架構與可維護性
+- 複雜邏輯必須包含清晰的文檔與註解
+- 函數和模組必須具有單一、明確的責任
+- 死代碼與未使用的依賴必須立即移除
+- 命名規範必須一致且自我文檔化
 
-**Rationale**: High-quality code reduces bugs, accelerates onboarding,
-enables safer refactoring, and reduces technical debt accumulation.
+**根據**: 高質量代碼可減少 bug、加速新人上手、啟用更安全的重構，
+並減少技術債累積。
 
 ---
 
-### II. Testing Standards
+### II. 測試標準
 
-Testing is a primary engineering activity, not an afterthought. Test-driven
-development (TDD) ensures correctness, maintainability, and confidence in
-deployments.
+測試是第一流的工程活動，而非事後補救。測試驅動開發 (TDD) 
+確保正確性、可維護性與部署信心。
 
-**Non-Negotiable Rules:**
-- Tests MUST be written before implementation (TDD mandatory)
-- Test coverage MUST be ≥ 80% for critical paths
-- All public APIs MUST have contract tests
-- Integration tests MUST verify inter-component communication
-- Unit tests MUST be fast (<100ms per test)
-- Tests MUST be independent and reproducible (no shared state)
-- Failing tests MUST block merges to main branch
+**不可妥協的規則:**
+- 測試必須在實現之前編寫 (TDD 強制)
+- 測試覆蓋率必須 ≥ 80% (關鍵路徑)
+- 所有公共 API 必須有合約測試
+- 整合測試必須驗證元件間通訊
+- 單位測試必須快速 (<100ms 每個測試)
+- 測試必須獨立且可重現 (無共享狀態)
+- 失敗的測試必須阻止合併到 main 分支
 
-**Rationale**: Comprehensive testing prevents regressions, documents
-expected behavior, enables confident refactoring, and reduces production
-incidents.
+**根據**: 全面的測試可防止迴歸、記錄預期行為、啟用自信的重構，
+並減少生產事件。
 
 ---
 
-### III. User Experience Consistency
+### III. 用戶體驗一致性
 
-Every user-facing feature MUST deliver a consistent, predictable, and
-delightful experience. Consistency builds trust and reduces cognitive load.
+每個面向用戶的功能必須提供一致、可預測且愉悅的體驗。
+一致性建立信任並減少認知負荷。
 
-**Non-Negotiable Rules:**
-- All UI components MUST follow established design system
-- User workflows MUST align with existing interaction patterns
-- Error messages MUST be clear, actionable, and user-friendly
-- Loading states and feedback MUST be visible and informative
-- Accessibility standards MUST be met (WCAG 2.1 AA minimum)
-- API responses MUST return consistent data formats and error structures
-- Localization/internationalization MUST be considered in design
+**不可妥協的規則:**
+- 所有 UI 元件必須遵循既定的設計系統
+- 用戶工作流程必須符合既有互動模式
+- 錯誤訊息必須清晰、可行動且用戶友善
+- 載入狀態與回饋必須可見且提示性
+- 可訪問性標準必須達成 (WCAG 2.1 AA 最低)
+- API 回應必須返回一致的數據格式與錯誤結構
+- 本地化/多國語言支援必須在設計中考量
 
-**Rationale**: Consistency improves user satisfaction, reduces support
-burden, and increases adoption and retention.
-
----
-
-### IV. Performance Requirements
-
-The application MUST perform efficiently under expected load to deliver
-responsive user experiences and minimize infrastructure costs.
-
-**Non-Negotiable Rules:**
-- API response times MUST be ≤ 200ms for p95 under normal load
-- UI interactions MUST be ≤ 100ms to feel instant
-- Database queries MUST be optimized with proper indexing
-- Bundle sizes MUST not exceed 500KB (gzipped) for frontend assets
-- Memory usage MUST be monitored and profiled regularly
-- Performance regressions MUST be caught in automated testing
-- Load testing MUST be performed before major releases
-
-**Rationale**: Performance directly impacts user experience, conversion
-rates, and operational costs. Early detection prevents costly production
-incidents.
+**根據**: 一致性提高用戶滿意度、減少支援負擔，
+並提升採用率與留存率。
 
 ---
 
-## Quality Assurance Standards
+### IV. 性能要求
 
-All features MUST pass through defined quality gates before deployment:
+應用程式必須在預期負載下高效運行，以提供快速回應的用戶體驗
+並最小化基礎設施成本。
 
-1. **Code Review Gate**: Peer review verifying code quality principles
-2. **Test Gate**: Automated tests pass (unit, integration, contract)
-3. **Performance Gate**: Performance benchmarks met or explained
-4. **UX Consistency Gate**: Feature reviewed against design system
-5. **Accessibility Gate**: WCAG 2.1 AA compliance verified
+**不可妥協的規則:**
+- API 回應時間必須 ≤ 200ms (p95 正常負載下)
+- UI 互動必須 ≤ 100ms 才能感覺即時
+- 資料庫查詢必須使用適當索引最佳化
+- 套件大小必須不超過 500KB (gzip 壓縮後)
+- 記憶體使用必須定期監控與分析
+- 性能退化必須在自動化測試中捕獲
+- 主要版本發布前必須進行負載測試
 
----
-
-## Development Workflow & Review Process
-
-**Pre-Commit**:
-- All code MUST pass linting and formatting checks
-- All tests MUST pass locally before committing
-
-**Pull Request**:
-- At least one peer review MUST approve before merge
-- All automated checks (linting, tests, performance) MUST pass
-- Constitution compliance MUST be verified by reviewers
-- Commit messages MUST clearly describe changes and link to tracking
-
-**Merge to Main**:
-- Feature branch MUST be up-to-date with main
-- All review comments MUST be addressed or closed
-- Deployment readiness verification
+**根據**: 性能直接影響用戶體驗、轉換率與運營成本。
+早期偵測可防止成本高昂的生產事件。
 
 ---
 
-## Governance
+### V. 文檔本地化
 
-**Constitution Authority**: This constitution supersedes all informal
-practices and conventions. When conflicts arise, the constitution provides
-the definitive standard.
+所有面向用戶的規範、計劃與文檔必須使用繁體中文 (zh-TW) 編寫。
+清晰的本地化文檔確保全球化用戶能準確理解需求與指引。
 
-**Amendment Procedure**:
-1. Proposed changes MUST be documented with clear rationale
-2. Amendments MUST be reviewed by team leads for alignment
-3. Rationale and migration plan MUST be provided for breaking changes
-4. Version number MUST follow semantic versioning (MAJOR.MINOR.PATCH)
+**不可妥協的規則:**
+- 特性規範必須以繁體中文編寫
+- 實現計劃必須以繁體中文編寫
+- 用戶文檔必須以繁體中文編寫
+- API 錯誤訊息必須以繁體中文提供
+- 代碼註解可使用英文，但複雜邏輯必須有繁體中文說明
+- 提交訊息必須以繁體中文撰寫
 
-**Compliance Review**: Constitution compliance MUST be verified in all
-code reviews. Exceptions MUST be explicitly documented with business
-justification.
-
-**Runtime Guidance**: Development guidance, examples, and tool
-configuration are documented in `.github/prompts/` and project README.
-These are living documents that reflect the constitution's intent.
+**根據**: 使用本地語言文檔降低溝通障礙、提高文檔質量、
+加速新人理解，並確保團隊所有成員能有效參與。
 
 ---
 
-**Version**: 1.0.0 | **Ratified**: 2025-10-18 | **Last Amended**: 2025-10-18
+## 品質保證標準
+
+所有功能在部署前必須通過定義的品質閘門：
+
+1. **代碼審查閘門**: 同行審查驗證代碼品質原則
+2. **測試閘門**: 自動化測試通過 (單位、整合、合約)
+3. **性能閘門**: 性能基準達成或有合理解釋
+4. **UX 一致性閘門**: 功能針對設計系統進行審查
+5. **可訪問性閘門**: WCAG 2.1 AA 合規性已驗證
+6. **文檔本地化閘門**: 所有用戶文檔使用繁體中文驗證
+
+---
+
+## 開發工作流程與審查流程
+
+**預提交**:
+- 所有代碼必須通過 linting 與格式化檢查
+- 所有測試必須在本地通過後才能提交
+
+**拉取請求**:
+- 至少一位同行必須在合併前批准
+- 所有自動化檢查必須通過 (linting、測試、性能)
+- 憲章合規性必須由審查者驗證
+- 提交訊息必須清晰描述變更並連結至追蹤系統
+
+**合併到主分支**:
+- 功能分支必須與 main 保持最新
+- 所有審查意見必須被處理或關閉
+- 部署就緒性驗證完成
+
+---
+
+## 治理
+
+**憲章權威性**: 本憲章優先於所有非正式實踐與慣例。
+當發生衝突時，憲章提供明確標準。
+
+**修訂程序**:
+1. 提議的變更必須附帶清晰的根據說明
+2. 修訂必須由團隊主管審查以確保對齊
+3. 破壞性變更必須提供根據與遷移計劃
+4. 版本號必須遵循語義版本控制 (MAJOR.MINOR.PATCH)
+
+**合規性審查**: 憲章合規性必須在所有代碼審查中驗證。
+例外情況必須明確記錄並附帶商業正當理由。
+所有文檔必須以繁體中文 (zh-TW) 審查與驗證。
+
+**運行指引**: 開發指引、範例與工具配置記錄在 `.github/prompts/` 
+與專案 README 中。這些是反映憲章意圖的活文檔。
+
+---
+
+**版本**: 1.1.0 | **批准日期**: 2025-06-13 | **最後修訂**: 2025-10-18
 
 ```

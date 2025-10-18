@@ -1,43 +1,44 @@
-# Feature Specification: [FEATURE NAME]
+# 功能規範: [功能名稱]
 
-**Feature Branch**: `[###-feature-name]`  
-**Created**: [DATE]  
-**Status**: Draft  
-**Input**: User description: "$ARGUMENTS"
+**功能分支**: `[###-feature-name]`  
+**建立**: [日期]  
+**狀態**: 草稿  
+**輸入**: 使用者描述: "$ARGUMENTS"
+**語言**: 繁體中文 (zh-TW)
 
-## User Scenarios & Testing *(mandatory)*
+## 用戶場景與測試 *(強制)*
 
 <!--
-  IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
-  Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
-  you should still have a viable MVP (Minimum Viable Product) that delivers value.
+  重要: 用戶故事應按重要性優先排序為用戶旅程。
+  每個用戶故事/旅程必須獨立可測試 - 即如果您只實現其中一個，
+  您仍應該有一個可行的 MVP (最小可行產品) 提供價值。
   
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
+  為每個故事指派優先級 (P1、P2、P3 等)，其中 P1 是最關鍵的。
+  將每個故事視為一個獨立的功能切片，可以:
+  - 獨立開發
+  - 獨立測試
+  - 獨立部署
+  - 獨立向用戶演示
 -->
 
-### User Story 1 - [Brief Title] (Priority: P1)
+### 用戶故事 1 - [簡短標題] (優先級: P1)
 
-[Describe this user journey in plain language]
+[用平白的語言描述此用戶旅程]
 
-**Why this priority**: [Explain the value and why it has this priority level]
+**為什麼這個優先級**: [解釋價值和為什麼有這個優先級]
 
-**Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
+**獨立測試**: [描述這如何能獨立測試 - 例如: "可以通過[具體行動]完全測試並提供[具體價值]"]
 
-**Acceptance Scenarios**:
+**接納情景**:
 
-1. **Given** [initial state], **When** [action], **Then** [expected outcome]
-2. **Given** [initial state], **When** [action], **Then** [expected outcome]
+1. **給定** [初始狀態], **當** [操作], **然後** [預期結果]
+2. **給定** [初始狀態], **當** [操作], **然後** [預期結果]
 
 ---
 
-### User Story 2 - [Brief Title] (Priority: P2)
+### 用戶故事 2 - [簡短標題] (優先級: P2)
 
-[Describe this user journey in plain language]
+[用平白的語言描述此用戶旅程]
 
 **Why this priority**: [Explain the value and why it has this priority level]
 

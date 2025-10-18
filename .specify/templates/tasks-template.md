@@ -1,33 +1,35 @@
 ---
-description: "Task list template for feature implementation"
+description: "功能實現的任務清單模板"
 ---
 
-# Tasks: [FEATURE NAME]
+# 任務: [功能名稱]
 
-**Input**: Design documents from `/specs/[###-feature-name]/`
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
+**輸入**: 設計文檔來自 `/specs/[###-feature-name]/`
+**先決條件**: plan.md (必需)、spec.md (用戶故事必需)、research.md、data-model.md、contracts/
+**語言**: 所有文檔必須使用繁體中文 (zh-TW)
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**測試**: 下面的示例包含測試任務。測試是可選的 - 僅在功能規範中明確要求時包含。
 
-**Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
+**組織**: 任務按用戶故事分組，以啟用每個故事的獨立實現和測試。
 
-## Format: `[ID] [P?] [Story] Description`
-- **[P]**: Can run in parallel (different files, no dependencies)
-- **[Story]**: Which user story this task belongs to (e.g., US1, US2, US3)
-- Include exact file paths in descriptions
+## 格式: `[ID] [P?] [Story] 描述`
+- **[P]**: 可並行運行 (不同檔案，無依賴)
+- **[Story]**: 此任務屬於哪個用戶故事 (例如: US1、US2、US3)
+- 在描述中包含精確的檔案路徑
 
-## Path Conventions
-- **Single project**: `src/`, `tests/` at repository root
-- **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+## 路徑慣例
+- **單一專案**: 存放庫根目錄的 `src/`、`tests/`
+- **Web 應用**: `backend/src/`、`frontend/src/`
+- **移動應用**: `api/src/`、`ios/src/` 或 `android/src/`
+- 下面顯示的路徑假設單一專案 - 根據 plan.md 調整
 
 <!-- 
   ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
+  重要: 下面的任務是示例任務，僅供說明目的。
   
-  The /speckit.tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
+  /speckit.tasks 命令必須根據以下內容將這些替換為實際任務:
+  - spec.md 中的用戶故事 (具有優先級 P1、P2、P3...)
+
   - Feature requirements from plan.md
   - Entities from data-model.md
   - Endpoints from contracts/
@@ -51,36 +53,81 @@ description: "Task list template for feature implementation"
 - [ ] T004 [P] Setup code quality enforcement (ESLint, Prettier, Black, etc.)
 - [ ] T005 [P] Configure test runner and coverage reporting
 - [ ] T006 [P] Setup performance profiling and monitoring tools
+- [ ] T006b [P] 驗證所有文檔與模板使用繁體中文 (zh-TW) - 包括 README、規範、計劃
 
 ---
 
-## Phase 2: Foundational (Blocking Prerequisites)
+## 第 2 階段: 基礎設施 (阻止性先決條件)
 
-**Purpose**: Core infrastructure that MUST be complete before ANY user story can be implemented
+**目的**: 任何用戶故事實現前必須完成的核心基礎設施
 
-**⚠️ CRITICAL**: No user story work can begin until this phase is complete
+**⚠️ 關鍵**: 此階段完成前無法開始任何用戶故事工作
 
-Examples of foundational tasks (adjust based on your project):
+基礎設施任務範例 (根據您的專案調整):
 
-- [ ] T007 Setup database schema and migrations framework
-- [ ] T008 [P] Implement authentication/authorization framework
-- [ ] T009 [P] Setup API routing and middleware structure
-- [ ] T010 Create base models/entities that all stories depend on
-- [ ] T011 Configure error handling and logging infrastructure
-- [ ] T012 Setup environment configuration management
-- [ ] T013 [P] Create base error response types (per UX consistency principle)
-- [ ] T014 [P] Establish design system component library
-- [ ] T015 Setup CI/CD pipeline with quality gates (tests, coverage, linting)
+- [ ] T007 設置資料庫架構與遷移框架
+- [ ] T008 [P] 實現認證/授權框架
+- [ ] T009 [P] 設置 API 路由與中介軟體結構
+- [ ] T010 建立所有故事依賴的基礎模型/實體
+- [ ] T011 配置錯誤處理與日誌基礎設施
+- [ ] T012 設置環境配置管理
+- [ ] T013 [P] 建立基礎錯誤回應類型 (按 UX 一致性原則)
+- [ ] T014 [P] 建立設計系統元件庫
+- [ ] T015 設置 CI/CD 管道與品質閘門 (測試、涵蓋率、linting)
+- [ ] T015b 設置文檔本地化檢查 - CI 應驗證規範/計劃/文檔均使用繁體中文
 
-**Checkpoint**: Foundation ready - user story implementation can now begin in parallel
+**檢查點**: 基礎設施就緒 - 用戶故事實現現可並行開始
 
 ---
 
-## Phase 3: User Story 1 - [Title] (Priority: P1) 🎯 MVP
+## 第 3 階段: 用戶故事 1 - [標題] (優先級: P1) 🎯 MVP
 
-**Goal**: [Brief description of what this story delivers]
+**目標**: [簡短描述此故事提供的內容]
 
-**Independent Test**: [How to verify this story works on its own]
+**獨立測試**: [如何驗證此故事獨立運作]
+
+### 用戶故事 1 的品質與測試任務 (憲章要求)
+
+- [ ] T016 [P] [US1] 為 [元件] 編寫單位測試 (首先) 在 tests/unit/test_[name].py
+- [ ] T017 [P] [US1] 為 [端點] 編寫合約測試 (首先) 在 tests/contract/test_[name].py
+- [ ] T018 [P] [US1] 為 [用戶旅程] 編寫整合測試 在 tests/integration/test_[name].py
+- [ ] T019 [US1] 為 [關鍵路徑] 新增性能基準 (如適用 PERF-001/PERF-002)
+
+### 用戶故事 1 的實現任務
+
+- [ ] T020 [P] [US1] 在 src/models/[entity1].py 建立 [Entity1] 模型
+- [ ] T021 [P] [US1] 在 src/models/[entity2].py 建立 [Entity2] 模型
+- [ ] T022 [US1] 在 src/services/[service].py 實現 [Service] (取決於 T020、T021)
+- [ ] T023 [US1] 在 src/[location]/[file].py 實現 [端點/功能]
+- [ ] T024 [US1] 按 UX 一致性原則新增驗證與錯誤處理 (清晰的錯誤訊息)
+- [ ] T025 [US1] 為用戶故事 1 操作新增日誌記錄
+- [ ] T026 [US1] UX 審查 - 驗證對設計系統與可訪問性標準的對齐
+- [ ] T026b [US1] 文檔本地化審查 - 確認所有規範、計劃與文檔使用繁體中文
+
+**檢查點**: 此時用戶故事 1 應完全功能性且獨立可測試
+
+---
+
+## 第 4 階段: 用戶故事 2 - [標題] (優先級: P2)
+
+**目標**: [簡短描述此故事提供的內容]
+
+**獨立測試**: [如何驗證此故事獨立運作]
+
+### 用戶故事 2 的品質與測試任務 (憲章要求)
+
+- [ ] T027 [P] [US2] 為 [元件] 編寫單位測試 (首先) 在 tests/unit/test_[name].py
+- [ ] T028 [P] [US2] 為 [端點] 編寫合約測試 (首先) 在 tests/contract/test_[name].py
+- [ ] T029 [US2] 如適用新增性能基準
+
+### 用戶故事 2 的實現任務
+
+- [ ] T030 [P] [US2] 在 src/models/[entity].py 建立 [Entity] 模型
+- [ ] T031 [US2] 在 src/services/[service].py 實現 [Service]
+- [ ] T032 [US2] 在 src/[location]/[file].py 實現 [端點/功能]
+- [ ] T033 [US2] 新增驗證與錯誤處理
+- [ ] T034 [US2] UX 審查 - 驗證設計系統合規性
+- [ ] T034b [US2] 文檔本地化審查 - 繁體中文驗證
 
 ### Quality & Testing Tasks for User Story 1 (REQUIRED per Constitution)
 
